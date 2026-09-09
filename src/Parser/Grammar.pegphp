@@ -1,0 +1,91 @@
+/**
+ * Wikipeg grammar for a simple language not unlike wikitext.
+ * This grammar generates an abstract syntax tree from the markup.
+ *
+ * See https://www.npmjs.com/package/wikipeg for details on the
+ * grammar.
+ *
+ * UNDERSTANDING OR MODIFYING THIS FILE ISN'T REQUIRED TO COMPLETE
+ * THE GIVEN TASKS.
+ *
+ * This is the source file; Grammar.php is the generated file.
+ */
+{
+// Grammar.php is automatically generated from Grammar.pegphp
+
+// UNDERSTANDING OR MODIFYING THIS FILE ISN'T REQUIRED TO COMPLETE
+// THE GIVEN TASKS.
+
+namespace Wikimedia\LittleWikitext\Parser;
+
+use Wikimedia\LittleWikitext\AST\Heading;
+use Wikimedia\LittleWikitext\AST\Inclusion;
+use Wikimedia\LittleWikitext\AST\Link;
+use Wikimedia\LittleWikitext\AST\ListItem;
+use Wikimedia\LittleWikitext\AST\Node;
+use Wikimedia\LittleWikitext\AST\Paragraph;
+use Wikimedia\LittleWikitext\AST\Root;
+use Wikimedia\LittleWikitext\AST\Section;
+use Wikimedia\LittleWikitext\AST\Text;
+
+// File-scope initializers
+}
+{
+	// Class-scope initializers
+
+	/**
+	 * @param string $contents
+	 * @return Root
+	 */
+	public static function load( string $contents ): Root {
+		$g = new Grammar();
+		return $g->parse( $contents );
+	}
+}
+
+// The start production of the grammar.
+start = s:unnamed_section? children:section* {
+	if ($s !== null) {
+		array_unshift( $children, $s );
+	}
+	return new Root( $children );
+}
+
+section = h:heading children:list_or_para* {
+	return new Section( $h, $children );
+}
+
+unnamed_section = children:list_or_para+ {
+	return new Section( null, $children );
+}
+
+heading = sol "==" txt:(!"==" @inline)+ "==" eol {
+	return new Heading( Node::trim( $txt ) );
+}
+
+list_or_para = sol !"==" level:("*"*) txt:(inline*) eol {
+	if ( count( $level ) === 0 ) {
+		// Plain text, not a list item
+		return new Paragraph( Node::normalize( $txt ) );
+	} else {
+		return new ListItem( count( $level ), Node::trim( $txt ) );
+	}
+}
+
+inline = link / template / c:notnl { return new Text( $c ); }
+
+template = "{{" target:(!"}}" @notnl)+ "}}" {
+	$target = trim( implode( '', $target ) );
+	return new Inclusion( $target );
+}
+
+link = "[[" target:(!"|" @notnl)+ "|" caption:(!("[["/"]]") @inline)* "]]" {
+	$target = trim( implode( '', $target ) );
+	return new Link( $target, Node::trim( $caption ) );
+}
+
+notnl = [^\n\r]
+
+sol = ""
+
+eol = [\r] [\n]? / "\n"

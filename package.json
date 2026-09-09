@@ -1,0 +1,16 @@
+{
+    "name": "little-wikitext",
+    "description": "A simple parser for something not unlike wikitext",
+    "devDependencies": {
+        "wikipeg": "^6.1.4"
+    },
+    "scripts": {
+        "wikipeg": "npm run wikipeg-markup && npm run wikipeg-tests",
+        "wikipeg-markup": "wikipeg --php --class-name Grammar src/Parser/Grammar.pegphp src/Parser/Grammar.php",
+        "wikipeg-tests": "wikipeg --php --class-name Grammar tests/ParserTests/Grammar.pegphp tests/ParserTests/Grammar.php"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/wikimedia/WebIDL.git"
+    }
+}

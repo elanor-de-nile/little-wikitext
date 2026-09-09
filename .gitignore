@@ -1,0 +1,9 @@
+/coverage
+/doc
+/vendor
+/composer.lock
+/composer.phar
+/.idea
+/node_modules
+package-lock.json
+/.phpunit.result.cache
