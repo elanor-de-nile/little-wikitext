@@ -4,13 +4,13 @@ declare( strict_types = 1 );
 namespace Wikimedia\LittleWikitext\Tests\ParserTests;
 
 class TestFileReader {
-	/** @var Test[] */
+	/** @var TestItem[] */
 	public $testCases = [];
 
 	/**
 	 * Read and parse a parserTest file.
 	 * @param string $testFilePath The parserTest file to read
-	 * @return Test[]
+	 * @return TestItem[]
 	 */
 	public static function read(
 		string $testFilePath
@@ -34,7 +34,7 @@ class TestFileReader {
 		$lastComment = '';
 		foreach ( $rawTestItems as $item ) {
 			if ( $item['type'] === 'test' ) {
-				$test = new Test(
+				$test = new TestItem(
 					$item,
 					$lastComment
 				);

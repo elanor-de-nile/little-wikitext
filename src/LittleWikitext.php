@@ -45,6 +45,7 @@ abstract class LittleWikitext {
 	 * @param array $options
 	 * @return Root An abstract syntax tree corresponding to the input
 	 */
+	// @phan-suppress-next-line PhanUnusedPublicNoOverrideMethodParameter
 	public static function markup2ast( string $markup, array $options = [] ): Root {
 		// Ensure every line is terminated with a newline.
 		$root = Grammar::load( "$markup\n" );

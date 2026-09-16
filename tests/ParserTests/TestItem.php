@@ -6,7 +6,7 @@ namespace Wikimedia\LittleWikitext\Tests\ParserTests;
 /**
  * Represents a parser test
  */
-class Test extends Item {
+class TestItem extends Item {
 	/* --- These are test properties from the test file --- */
 
 	/** @var ?string This is the test name, not page title for the test */

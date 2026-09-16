@@ -8,7 +8,7 @@ $cfg['directory_list'] = [
 	'.phan/stubs',
 ];
 $cfg['exclude_analysis_directory_list'][] = 'vendor/wikimedia';
-$cfg['suppress_issue_types'] = [];
+$cfg['suppress_issue_types'] = [ 'PhanUnusedPublicMethodParameter', 'PhanUnusedPublicMethodNoOverrideMethodParamter' ];
 
 # Exclude peg-generated output
 $cfg['exclude_file_list'][] = "src/Parser/Grammar.php";

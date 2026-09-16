@@ -95,7 +95,6 @@ abstract class Node {
 		$text = [];
 		$result = [];
 		foreach ( $children as $item ) {
-			$last = count( $result ) - 1;
 			if ( $item instanceof Text ) {
 				if ( $item->value !== '' ) {
 					$text[] = $item->value;

@@ -42,6 +42,7 @@ class LittleWikitextTest extends \PHPUnit\Framework\TestCase {
 		);
 		$input = $sections['markup'];
 		$unexpanded = $sections['html/unexpanded'] ?? $sections['html'] ?? null;
+		// @phan-suppress-next-line PhanUnusedVariable
 		$expanded = $sections['html/expanded'] ?? $sections['html'] ?? null;
 
 		$ast = LittleWikitext::markup2ast( $input );
@@ -84,7 +85,7 @@ class LittleWikitextTest extends \PHPUnit\Framework\TestCase {
 			'Invalid HTML (expanded)'
 		);
 		$expanded = null; // XXX remove this line to enable tests
-		// @phan-suppress-next-line PhanSuspiciousValueComparison
+		// @phan-suppress-next-line PhanImpossibleValueComparison
 		if ( $expanded !== null ) {
 			$this->assertEquals(
 				$expanded,

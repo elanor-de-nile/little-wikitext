@@ -36,6 +36,7 @@ class ValidHtmlTest extends \PHPUnit\Framework\TestCase {
 	 */
 	public static function makeValidHtml( string $input, bool $noisyErrors = true ): string {
 		$errorList = [];
+		// @phan-suppress-next-line PhanUnusedClosureParameter,PhanUnusedVariableReference
 		$errorCallback = static function ( $text, $pos ) use ( &$errorList, $noisyErrors ) {
 			# If you want to see the errors inline in the HTML, uncomment this:
 			# $errorList[] = "\n<!-- $text -->";
@@ -48,6 +49,7 @@ class ValidHtmlTest extends \PHPUnit\Framework\TestCase {
 		$formatter = new class( [] ) extends HtmlFormatter {
 			public function startDocument( $fragmentNamespace, $fragmentName ) {
 				/* Suppress doctype */
+				return '';
 			}
 		};
 		$serializer = new Serializer( $formatter, $errorCallback );
